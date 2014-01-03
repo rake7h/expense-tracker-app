@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+<h:body>
+	<ui:composition template="WEB-INF/facelets/basicLayout.xhtml">
+
+		<ui:define name="content">
+			<h:form>
+				<p:panel header="Filter">
+					<h:panelGrid columns="4">
+
+						<p:outputLabel value="Year:" />
+
+						<p:selectOneMenu id="year" value="#{sb.selectedYear}">
+							<p:ajax update="month" listener="#{sb.yearChangeListener}" />
+							<f:selectItem itemLabel="Select One" itemValue="" />
+							<f:selectItems value="#{sb.years}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Month:" />
+						<p:selectOneMenu id="month" style="width:150px;">
+							<p:ajax listener="#{sb.updateStatsTable}" update="statsTable"/>
+							<f:selectItems value="#{sb.months}" var="m"
+								itemLabel="#{m.monthString}" itemValue="#{m}" />
+							<f:converter for="month" converterId="monthDtoConverter"/>
+						</p:selectOneMenu>
+
+					</h:panelGrid>
+				</p:panel>
+
+				<h:panelGrid columns="2">
+					<h:panelGrid columns="1">
+						<p:dataTable id="statsTable" value="#{sb.stats}" var="s"
+							style="width:350px;">
+
+							<f:facet name="header">  
+            			Expense Stats
+        				</f:facet>
+
+							<p:column headerText="Item" sortBy="item">
+								<h:outputText value="#{s.item}" />
+							</p:column>
+
+							<p:column headerText="Total" sortBy="total"
+								style="text-align:right;">
+								<h:outputText value="#{s.total}" />
+							</p:column>
+
+						</p:dataTable>
+						
+						<h:panelGrid columns="2" width="100%"
+							style="text-align:right;font-weight:bold">
+							<p:outputLabel value="" />
+							<p:outputLabel id="statsSummaryLbl" value=" Total: #{sb.statsSummary}" />
+						</h:panelGrid>
+						
+					</h:panelGrid>
+					
+					<p:barChart id="statsBarChart" value="#{sb.statsChartModel}" showDatatip="true" xaxisAngle="270"
+						legendPosition="ne" title="Stats Chart" min="0" 
+						style="height:400px; width:500px" />
+				</h:panelGrid>
+
+			</h:form>
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+
+</html>

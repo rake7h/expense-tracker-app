@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd"
+	version="2.1">
+
+	<application>
+		<message-bundle>messages</message-bundle>
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+	</application>
+
+	<application>
+		<resource-bundle>
+			<base-name>messages</base-name>
+			<var>msg</var>
+		</resource-bundle>
+	</application>
+
+	<managed-bean>
+		<managed-bean-name>exp</managed-bean-name>
+		<managed-bean-class>com.bharatonjava.expense.web.ExpenseBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>expenseService</property-name>
+			<value>#{expenseService}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>sb</managed-bean-name>
+		<managed-bean-class>com.bharatonjava.expense.web.StatsBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>statsService</property-name>
+			<value>#{statsService}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<converter>
+		<converter-id>groupConverter</converter-id>
+		<converter-class>com.bharatonjava.expense.web.converter.GroupConverter</converter-class>
+	</converter>
+	
+	<converter>
+		<converter-id>monthDtoConverter</converter-id>
+		<converter-class>com.bharatonjava.expense.web.converter.MonthDtoConverter</converter-class>
+	</converter>
+</faces-config>
