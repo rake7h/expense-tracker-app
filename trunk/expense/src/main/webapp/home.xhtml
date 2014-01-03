@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+<h:body>
+	<ui:composition template="WEB-INF/facelets/basicLayout.xhtml">
+
+		<ui:define name="content">
+			<h:form>
+				<p:panel header="Entry Form">
+					<h:panelGrid columns="11">
+						<p:spacer height="10" width="100" />
+						<p:outputLabel value="Date:" />
+						<p:calendar value="#{exp.entry.entryDate}" id="entryDateCal"
+							pattern="dd-MM-yyyy">
+							<f:convertDateTime pattern="dd-MM-yyyy" type="date" />
+						</p:calendar>
+
+						<p:outputLabel value="Detail:" />
+						<p:inputText id="entryDetailInput"
+							value="#{exp.entry.entryDetail}" >
+							<p:watermark for="entryDetailInput" value="Expense Description" />
+						</p:inputText>	
+						
+						<p:outputLabel value="Type:" />
+						<p:selectOneMenu value="#{exp.selectedGroup}">
+							<p:ajax event="valueChange" update="groupsSelect"
+								listener="#{exp.typeChangeListener}" />
+							<f:selectItems value="#{exp.groupNames}" />
+						</p:selectOneMenu>
+
+						<p:selectOneMenu id="groupsSelect" value="#{exp.entry.group}">
+							<f:selectItems value="#{exp.groups}" var="gp"
+								itemLabel="#{gp.groupValue}" itemValue="#{gp}" />
+							<f:converter for="groupsSelect" converterId="groupConverter" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Amount:" />
+						<p:inputText value="#{exp.entry.amount}" />
+
+						<p:commandButton value="Save" actionListener="#{exp.saveEntry}"
+							ajax="false" />
+					</h:panelGrid>
+				</p:panel>
+			</h:form>
+
+
+			<p:dataTable value="#{exp.entries}" var="e"
+				rowStyleClass="#{e.group.groupName eq 'INCOME' ? 'income-row' : 'expense-row'}">
+
+				<p:column headerText="Id" sortBy="entryId">
+					<h:outputText value="#{e.entryId}" />
+				</p:column>
+
+				<p:column headerText="Date" sortBy="entryDate">
+					<h:outputText value="#{e.entryDate}">
+						<f:convertDateTime pattern="dd-MM-yyyy" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Detail" sortBy="entryDetail">
+					<h:outputText value="#{e.entryDetail}" />
+				</p:column>
+
+				<p:column headerText="Type" sortBy="group.groupName">
+					<h:outputText value="#{e.group.groupName}" />
+				</p:column>
+				
+				<p:column headerText="Type detail" sortBy="group.groupValue">
+					<h:outputText value="#{e.group.groupValue}" />
+				</p:column>
+				
+				<p:column headerText="Amount" sortBy="amount">
+					<h:outputText value="#{e.amount}" />
+				</p:column>
+			</p:dataTable>
+
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+
+</html>
