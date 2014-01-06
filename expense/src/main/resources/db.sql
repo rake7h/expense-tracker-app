@@ -1,18 +1,18 @@
-﻿
 DROP DATABASE IF EXISTS TRACKER;
 
 CREATE DATABASE TRACKER;
 
 USE TRACKER;
 
-DROP TABLE IF EXISTS ENTRIES;
+DROP TABLE IF EXISTS ENTRIES CASCADE;
 
-DROP TABLE  IF EXISTS GROUPS;
+DROP TABLE  IF EXISTS GROUPS CASCADE;
 
 CREATE TABLE GROUPS(
   GROUP_ID INT,
   GROUP_NAME VARCHAR(100),
   GROUP_VALUE VARCHAR(100),
+  ENABLED VARCHAR(1) DEFAULT 'Y',
   PRIMARY KEY (GROUP_ID)
 );
 
@@ -69,3 +69,5 @@ INSERT INTO ENTRIES(ENTRY_DATE,ENTRY_DETAIL,GROUP_ID,AMOUNT) VALUES( adddate(cur
 select sum(e.amount) as total,g.group_value as item from entries e join groups g on e.group_id=g.group_id group by g.group_value ;
 
 select * from entries where extract( month from entry_date) >= extract(MONTH from CURRENT_DATE);
+
+SELECT * FROM groups;

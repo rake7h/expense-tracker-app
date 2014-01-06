@@ -35,7 +35,7 @@ public class ExpenseDaoImpl implements ExpenseDao {
 	}
 
 	public List<Group> getGroups(String type) {
-		String sql = "SELECT * FROM GROUPS G WHERE G.GROUP_NAME LIKE ?";
+		String sql = "SELECT * FROM GROUPS G WHERE G.GROUP_NAME LIKE ? AND ENABLED = 'Y'";
 		List<Group> groups = this.jdbcTemplate.query(sql, new GroupRowMapper(),
 				new Object[] { type });
 		return groups;
