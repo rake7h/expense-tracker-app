@@ -9,6 +9,7 @@ public class Group implements Serializable{
 	private int groupId;
 	private String groupName;
 	private String groupValue;
+	private String enabled;
 	
 	public Group() {
 	}
@@ -35,6 +36,14 @@ public class Group implements Serializable{
 
 	public void setGroupValue(String groupValue) {
 		this.groupValue = groupValue;
+	}
+	
+	public String getEnabled() {
+		return enabled;
+	}
+	
+	public void setEnabled(String enabled) {
+		this.enabled = enabled;
 	}
 
 	@Override

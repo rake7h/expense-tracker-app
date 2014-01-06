@@ -14,7 +14,7 @@
 
 
 	<bean id="expenseService" class="com.bharatonjava.expense.service.ExpenseService">
-		<property name="expenseDao" ref="expenseDao"/>
+		<property name="expenseDao" ref="expenseDao" />
 	</bean>
 
 	<bean id="expenseDao" class="com.bharatonjava.expense.dao.ExpenseDaoImpl">
@@ -26,6 +26,14 @@
 	</bean>
 
 	<bean id="statsDao" class="com.bharatonjava.expense.dao.StatsDaoImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="masterService" class="com.bharatonjava.expense.service.MasterService">
+		<property name="masterDao" ref="masterDao" />
+	</bean>
+
+	<bean id="masterDao" class="com.bharatonjava.expense.dao.MasterDaoImpl">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 

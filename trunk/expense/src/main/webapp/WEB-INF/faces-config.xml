@@ -37,6 +37,17 @@
 		</managed-property>
 	</managed-bean>
 	
+	<managed-bean>
+		<managed-bean-name>mb</managed-bean-name>
+		<managed-bean-class>com.bharatonjava.expense.web.MasterBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>masterService</property-name>
+			<value>#{masterService}</value>
+		</managed-property>
+	</managed-bean>
+	
+	
 	<converter>
 		<converter-id>groupConverter</converter-id>
 		<converter-class>com.bharatonjava.expense.web.converter.GroupConverter</converter-class>

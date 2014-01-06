@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+<h:body>
+	<ui:composition template="WEB-INF/facelets/basicLayout.xhtml">
+
+		<ui:define name="content">
+			<h:form id="groupsForm" prependId="false">
+
+				<p:growl id="messages" showDetail="true" />
+
+				<p:panel header="Manage Expense Types">
+					<h:panelGrid columns="1">
+						<p:dataTable id="groupsTable" value="#{mb.groups}" var="g"
+							style="width:700px;" editable="true">
+
+							<f:facet name="header">  
+            						Manage Expense Types
+        						</f:facet>
+
+							<p:ajax event="rowEdit" listener="#{mb.onEdit}"
+								update=":groupsForm:messages" />
+							<p:ajax event="rowEditCancel" listener="#{mb.onCancel}"
+								update=":groupsForm:messages" />
+
+							<p:column headerText="Group Id" sortBy="groupId">
+								<h:outputText value="#{g.groupId}" />
+							</p:column>
+
+							<p:column headerText="Group Name" sortBy="groupName">
+								<h:outputText value="#{g.groupName}" />
+							</p:column>
+
+							<p:column headerText="Group Value" sortBy="groupValue">
+								<h:outputText value="#{g.groupValue}" />
+							</p:column>
+
+							<p:column headerText="Enabled" sortBy="enabled">
+								<h:outputText value="#{g.enabled}" />
+							</p:column>
+
+							<p:column style="width:6%">
+								<p:rowEditor />
+							</p:column>
+
+						</p:dataTable>
+
+
+					</h:panelGrid>
+				</p:panel>
+			</h:form>
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+
+</html>
